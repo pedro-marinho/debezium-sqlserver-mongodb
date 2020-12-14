@@ -1,0 +1,17 @@
+{
+  "name": "inventory-connector-sink",
+  "config": {
+      "connector.class" : "com.mongodb.kafka.connect.MongoSinkConnector",
+      "tasks.max" : "1",
+      "topics": "server1.dbo.customers,server1.dbo.orders",
+      "connection.uri": "mongodb://root:root@localhost/",
+      "database": "testDB",
+      "collection": "test",
+      "database.history.kafka.bootstrap.servers" : "kafka:9092",
+      "database.history.kafka.topic": "schema-changes.inventory",
+      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "key.converter.schemas.enable": false,
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter.schemas.enable": false
+  }
+}

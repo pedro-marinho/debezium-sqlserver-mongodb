@@ -3,15 +3,22 @@
   "config": {
       "connector.class" : "com.mongodb.kafka.connect.MongoSinkConnector",
       "tasks.max" : "1",
-      "topics": "server1.dbo.customers,server1.dbo.orders",
-      "connection.uri": "mongodb://root:root@localhost/",
+      "topics": "server1.dbo.customers",
+      "connection.uri": "mongodb://root:root@mongo:27017/",
       "database": "testDB",
-      "collection": "test",
+      "collection": "customers",
       "database.history.kafka.bootstrap.servers" : "kafka:9092",
       "database.history.kafka.topic": "schema-changes.inventory",
       "key.converter": "org.apache.kafka.connect.json.JsonConverter",
       "key.converter.schemas.enable": false,
       "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-      "value.converter.schemas.enable": false
+      "value.converter.schemas.enable": false,
+      "post.processor.chain": "com.mongodb.kafka.connect.sink.processor.AllowListValueProjector",
+      "value.projection.type": "AllowList",
+      "value.projection.list": "before.*,after.*",
+      "mongodb.document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
+      "mongodb.document.id.strategy.partial.value.projection.list":"after.id",
+      "mongodb.document.id.strategy.partial.value.projection.type":"AllowList",
+      "mongodb.writemodel.strategy":"com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"
   }
 }

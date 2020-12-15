@@ -13,12 +13,12 @@
       "key.converter.schemas.enable": false,
       "value.converter": "org.apache.kafka.connect.json.JsonConverter",
       "value.converter.schemas.enable": false,
-      "post.processor.chain": "com.mongodb.kafka.connect.sink.processor.AllowListValueProjector",
-      "value.projection.type": "AllowList",
-      "value.projection.list": "before.*,after.*",
-      "mongodb.document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
-      "mongodb.document.id.strategy.partial.value.projection.list":"after.id",
-      "mongodb.document.id.strategy.partial.value.projection.type":"AllowList",
-      "mongodb.writemodel.strategy":"com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"
+      "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialKeyStrategy",
+      "document.id.strategy.partial.key.projection.list":"user_code",
+      "document.id.strategy.partial.key.projection.type":"AllowList",
+      "writemodel.strategy":"com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy",
+      "transforms": "ExtractField",
+      "transforms.ExtractField.type":"org.apache.kafka.connect.transforms.ExtractField$Value",
+      "transforms.ExtractField.field":"after"
   }
 }
